@@ -12,6 +12,17 @@ export interface InfralyticsConfig {
   siteId: string;
 
   /**
+   * Optional ClickHouse database name for this tenant/site.
+   *
+   * The server authoritatively resolves the DB from the matched ClickHouse
+   * module configuration (by tenantId + siteId), so the SDK does NOT need
+   * to send this — but keeping it in config is useful for debugging and
+   * allows the SDK to pass it as a custom dimension so events can be
+   * filtered post-hoc by the intended destination DB.
+   */
+  dbName?: string;
+
+  /**
    * Map of custom dimension keys to CSS selectors or extractor functions.
    * When an auto-captured click/form event matches, the SDK populates
    * `custom_dimensions[key]` with the resolved value.
@@ -57,8 +68,26 @@ export interface InfralyticsConfig {
   /** Disable automatic click tracking */
   disableAutoClick?: boolean;
 
-  /** Disable automatic page-leave / unload tracking */
-  disableAutoPageLeave?: boolean;
+	/** Disable automatic page-leave / unload tracking */
+	disableAutoPageLeave?: boolean;
+
+	/**
+	 * Opt-in flag for precise browser geolocation.
+	 *
+	 * When `true`, `init()` will call `navigator.geolocation.getCurrentPosition`
+	 * which triggers the browser's location-permission prompt. On grant, all
+	 * subsequent events include `latitude` / `longitude` / `location_accuracy`
+	 * in their payload and are plotted as precise points on the Reports
+	 * heatmap. On deny or unavailable, the server-side IP-based country
+	 * fallback still populates the map — so it is always safe to leave off.
+	 *
+	 * Coords are cached in `localStorage` for 7 days; denials are cached for
+	 * 24 hours so we don't re-prompt on every page load.
+	 *
+	 * Default: `false`. Configured per-domain in the Domain admin UI and
+	 * delivered to the SDK via `/system/client/config?domainKey=…`.
+	 */
+	captureLocation?: boolean;
 }
 
 /**
@@ -67,16 +96,31 @@ export interface InfralyticsConfig {
  * still send them in the body for transparency — the server ignores them.
  */
 export interface AnalyticsEventPayload {
-  language_iso_code: string;
-  user_id: string;
-  anonymous_id: string;
-  session_id: string;
-  event_type: string;
-  event_subtype?: string | null;
-  custom_dimensions: Record<string, string>;
-  custom_metrics: Record<string, number>;
-  page_url: string;
-  country_code: string;
-  device_type: string;
-  utm_source: string | null;
+	language_iso_code: string;
+	user_id: string;
+	anonymous_id: string;
+	session_id: string;
+	event_type: string;
+	event_subtype?: string | null;
+	custom_dimensions: Record<string, string>;
+	custom_metrics: Record<string, number>;
+	page_url: string;
+	country_code: string;
+	device_type: string;
+	/**
+	 * Operating-system family (iOS / Android / Windows / macOS / Linux /
+	 * ChromeOS / Other). Captured separately from `device_type` (which is
+	 * just form factor) so reports can break traffic down by OS.
+	 */
+	device_os: string;
+	utm_source: string | null;
+	/**
+	 * Precise geolocation — only populated when the user has granted
+	 * `navigator.geolocation` consent (see `InfralyticsConfig.captureLocation`).
+	 * Missing fields default to 0 server-side and are excluded from the
+	 * precise-point heatmap (country centroids still apply via IP geo).
+	 */
+	latitude?: number;
+	longitude?: number;
+	location_accuracy?: number;
 }
