@@ -1,4 +1,4 @@
-import type { InfralyticsConfig } from './types';
+import type { InfralytiqsConfig } from './types';
 
 export type EventCallback = (
   eventType: string,
@@ -12,7 +12,7 @@ export type EventCallback = (
  */
 function resolveEvars(
   el: Element,
-  evarMap: InfralyticsConfig['evarMap'],
+  evarMap: InfralytiqsConfig['evarMap'],
 ): Record<string, string> {
   const dims: Record<string, string> = {};
   if (!evarMap) return dims;
@@ -35,7 +35,7 @@ function resolveEvars(
  */
 function resolveProps(
   el: Element,
-  propMap: InfralyticsConfig['propMap'],
+  propMap: InfralytiqsConfig['propMap'],
 ): Record<string, number> {
   const metrics: Record<string, number> = {};
   if (!propMap) return metrics;
@@ -78,7 +78,7 @@ function describeElement(el: Element): Record<string, string> {
  * Installs auto-capture listeners. Returns a teardown function.
  */
 export function installAutoCapture(
-  config: InfralyticsConfig,
+  config: InfralytiqsConfig,
   emit: EventCallback,
 ): () => void {
   const teardowns: Array<() => void> = [];

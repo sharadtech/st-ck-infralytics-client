@@ -1,10 +1,10 @@
 {
-  "name": "infralytics-client",
+  "name": "infralytiqs-client",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Lightweight website analytics tracker SDK for Infralytics (ClickHouse backend)",
-  "main": "dist/infralytics.min.js",
+  "description": "Lightweight website analytics tracker SDK for Infralytiqs (ClickHouse backend)",
+  "main": "dist/infralytiqs.min.js",
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
     "dev": "rollup -c rollup.config.mjs --watch",

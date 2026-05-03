@@ -1,14 +1,14 @@
 /**
- * Infralytics Client SDK — Entry Point
+ * Infralytiqs Client SDK — Entry Point
  *
  * Usage:
  *
  * 1. Include the built script in the page <head>:
- *      <script src="https://cdn.example.com/infralytics.min.js"></script>
+ *      <script src="https://cdn.example.com/infralytiqs.min.js"></script>
  *
  * 2. Bootstrap in the <body> with a <script> block:
  *      <script>
- *        Infralytics.init({
+ *        Infralytiqs.init({
  *          serverUrl:  'https://api.example.com',
  *          tenantId:   'my-tenant',
  *          siteId:     'my-site',
@@ -25,22 +25,25 @@
  *
  * 3. Track custom events anywhere:
  *      <script>
- *        Infralytics.track('search', { search_term: 'blue widget' });
- *        Infralytics.track('login',  { method: 'google' });
- *        Infralytics.identify('user-123');
+ *        Infralytiqs.track('search', { search_term: 'blue widget' });
+ *        Infralytiqs.track('login',  { method: 'google' });
+ *        Infralytiqs.identify('user-123');
  *      </script>
  */
 
-import { InfralyticsTracker } from './tracker';
-import type { InfralyticsConfig } from './types';
+import { InfralytiqsTracker } from './tracker';
+import type { InfralytiqsConfig } from './types';
 
-const tracker = new InfralyticsTracker();
+export { LICENSE_MODULE_ID } from './licenseModuleId';
+export type { InfralytiqsConfig };
 
-const Infralytics = {
+const tracker = new InfralytiqsTracker();
+
+const Infralytiqs = {
   /**
    * Initialize the tracker. Call once per page load.
    */
-  init(config: InfralyticsConfig): void {
+  init(config: InfralytiqsConfig): void {
     tracker.init(config);
   },
 
@@ -84,4 +87,5 @@ const Infralytics = {
   },
 };
 
-export default Infralytics;
+export default Infralytiqs;
+

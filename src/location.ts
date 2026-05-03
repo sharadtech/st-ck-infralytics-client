@@ -1,8 +1,8 @@
 /**
- * Opt-in browser geolocation helper for the Infralytics SDK.
+ * Opt-in browser geolocation helper for the Infralytiqs SDK.
  *
  * Behaviour:
- *   • Only ever runs if `InfralyticsConfig.captureLocation === true`.
+ *   • Only ever runs if `InfralytiqsConfig.captureLocation === true`.
  *   • Calls `navigator.geolocation.getCurrentPosition` exactly once per
  *     *authorization state* — meaning:
  *       – Consent granted     → coords cached in localStorage for 7 days
@@ -115,10 +115,10 @@ const prime = (): void => {
 /**
  * Kicks off the permission prompt (or returns a cached fix immediately).
  *
- * Called once from `InfralyticsTracker.init()` when `captureLocation: true`.
+ * Called once from `InfralytiqsTracker.init()` when `captureLocation: true`.
  * Idempotent — subsequent invocations return the same in-flight promise.
  *
- * @param debug Emit a `[Infralytics]` log line on each significant state
+ * @param debug Emit a `[Infralytiqs]` log line on each significant state
  *              transition. Matches the tracker's own log gating.
  */
 export const requestLocation = (debug?: boolean): Promise<CachedGeoCoords | null> => {
@@ -128,7 +128,7 @@ export const requestLocation = (debug?: boolean): Promise<CachedGeoCoords | null
   prime();
   if (memoryCoords) return Promise.resolve(memoryCoords);
   if (isDenyCached()) {
-    if (debug) console.log('[Infralytics] geolocation previously denied — skipping prompt');
+    if (debug) console.log('[Infralytiqs] geolocation previously denied — skipping prompt');
     return Promise.resolve(null);
   }
   if (!('geolocation' in navigator) || typeof navigator.geolocation?.getCurrentPosition !== 'function') {
@@ -148,7 +148,7 @@ export const requestLocation = (debug?: boolean): Promise<CachedGeoCoords | null
     // Hard timeout guard — some OSes silently never call back if the
     // permission dialog is dismissed without a click (e.g. alt-tabbed away).
     const timer = window.setTimeout(() => {
-      if (debug) console.log(`[Infralytics] geolocation prompt timed out after ${GEO_TIMEOUT_MS}ms`);
+      if (debug) console.log(`[Infralytiqs] geolocation prompt timed out after ${GEO_TIMEOUT_MS}ms`);
       done(null);
     }, GEO_TIMEOUT_MS + 1000);
 
@@ -166,7 +166,7 @@ export const requestLocation = (debug?: boolean): Promise<CachedGeoCoords | null
           writeCachedCoords(coords);
           if (debug) {
             console.log(
-              `[Infralytics] geolocation granted (sdk=${ENV.SDK_VERSION}, acc=${Math.round(coords.accuracy)}m)`,
+              `[Infralytiqs] geolocation granted (sdk=${ENV.SDK_VERSION}, acc=${Math.round(coords.accuracy)}m)`,
             );
           }
           done(coords);
@@ -177,9 +177,9 @@ export const requestLocation = (debug?: boolean): Promise<CachedGeoCoords | null
           // spam the prompt on every page load.
           if (err && err.code === 1) {
             markDenied();
-            if (debug) console.log('[Infralytics] geolocation permission denied');
+            if (debug) console.log('[Infralytiqs] geolocation permission denied');
           } else if (debug) {
-            console.log(`[Infralytics] geolocation error (code=${err?.code}): ${err?.message}`);
+            console.log(`[Infralytiqs] geolocation error (code=${err?.code}): ${err?.message}`);
           }
           done(null);
         },

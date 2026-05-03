@@ -1,8 +1,8 @@
 /**
- * Central environment configuration for the Infralytics tracker SDK.
+ * Central environment configuration for the Infralytiqs tracker SDK.
  *
  * These defaults are compile-time constants. They are overridden at runtime
- * via the `Infralytics.init({ ... })` bootstrap call on each website.
+ * via the `Infralytiqs.init({ ... })` bootstrap call on each website.
  */
 
 export const ENV = {

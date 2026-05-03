@@ -1,14 +1,14 @@
 /**
- * Configuration object passed to `Infralytics.init()`.
+ * Configuration object passed to `Infralytiqs.init()`.
  */
-export interface InfralyticsConfig {
+export interface InfralytiqsConfig {
   /** st-ck-server base URL, e.g. "https://api.example.com" */
   serverUrl: string;
 
-  /** Tenant ID assigned in the Infralytics settings */
+  /** Tenant ID assigned in the Infralytiqs settings */
   tenantId: string;
 
-  /** Site ID assigned in the Infralytics settings */
+  /** Site ID assigned in the Infralytiqs settings */
   siteId: string;
 
   /**
@@ -53,7 +53,7 @@ export interface InfralyticsConfig {
   /** Enable console debug logging */
   debug?: boolean;
 
-  /** Known user ID — same as calling `Infralytics.identify(userId)` */
+  /** Known user ID — same as calling `Infralytiqs.identify(userId)` */
   userId?: string;
 
   /** Additional custom dimensions sent with every event */
@@ -116,7 +116,7 @@ export interface AnalyticsEventPayload {
 	utm_source: string | null;
 	/**
 	 * Precise geolocation — only populated when the user has granted
-	 * `navigator.geolocation` consent (see `InfralyticsConfig.captureLocation`).
+	 * `navigator.geolocation` consent (see `InfralytiqsConfig.captureLocation`).
 	 * Missing fields default to 0 server-side and are excluded from the
 	 * precise-point heatmap (country centroids still apply via IP geo).
 	 */

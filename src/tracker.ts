@@ -1,5 +1,5 @@
 import { ENV } from './envConfig';
-import type { InfralyticsConfig, AnalyticsEventPayload } from './types';
+import type { InfralytiqsConfig, AnalyticsEventPayload } from './types';
 import { getAnonymousId, getSessionId, getUserId, setUserId } from './identity';
 import { getDeviceOS, getDeviceType, getLanguage, getCountryFromLanguage } from './device';
 import { getUtmParams } from './utm';
@@ -26,7 +26,7 @@ const PRE_INIT_BUFFER_LIMIT = 100;
 /**
  * Computes the effective page URL for analytics.
  *
- * For hash-router SPAs (e.g. `https://site/#/infralytics/reports/abc`) the
+ * For hash-router SPAs (e.g. `https://site/#/infralytiqs/reports/abc`) the
  * browser's `location.pathname` is always `/` and the real logical route
  * lives in `location.hash`. The ClickHouse backend stores `page_path` as
  *     page_path String ALIAS path(page_url)
@@ -66,8 +66,8 @@ function buildPageUrl(): string {
   }
 }
 
-export class InfralyticsTracker {
-  private config!: InfralyticsConfig;
+export class InfralytiqsTracker {
+  private config!: InfralytiqsConfig;
   private transportCfg!: TransportConfig;
   private queue: AnalyticsEventPayload[] = [];
   private flushTimer: ReturnType<typeof setInterval> | null = null;
@@ -80,14 +80,14 @@ export class InfralyticsTracker {
   /**
    * Initializes the tracker. Must be called once before any tracking occurs.
    */
-  init(config: InfralyticsConfig): void {
+  init(config: InfralytiqsConfig): void {
     if (this.initialized) {
       this.log('Already initialized — ignoring duplicate init()');
       return;
     }
 
     if (!config.serverUrl || !config.tenantId || !config.siteId) {
-      console.error('[Infralytics] init() requires serverUrl, tenantId, and siteId');
+      console.error('[Infralytiqs] init() requires serverUrl, tenantId, and siteId');
       return;
     }
 
@@ -167,8 +167,8 @@ export class InfralyticsTracker {
    * Manually track a named event.
    *
    * @example
-   *   Infralytics.track('search', { search_term: 'blue widget' });
-   *   Infralytics.track('login', { method: 'google' });
+   *   Infralytiqs.track('search', { search_term: 'blue widget' });
+   *   Infralytiqs.track('login', { method: 'google' });
    */
   track(
     eventType: string,
@@ -313,7 +313,7 @@ export class InfralyticsTracker {
 
   private log(...args: unknown[]): void {
     if (this.config?.debug && typeof console !== 'undefined') {
-      console.log('[Infralytics]', ...args);
+      console.log('[Infralytiqs]', ...args);
     }
   }
 }

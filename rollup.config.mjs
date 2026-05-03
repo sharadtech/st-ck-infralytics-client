@@ -6,15 +6,15 @@ export default {
   input: 'src/index.ts',
   output: [
     {
-      file: 'dist/infralytics.js',
+      file: 'dist/infralytiqs.js',
       format: 'iife',
-      name: 'Infralytics',
+      name: 'Infralytiqs',
       sourcemap: false,
     },
     {
-      file: 'dist/infralytics.min.js',
+      file: 'dist/infralytiqs.min.js',
       format: 'iife',
-      name: 'Infralytics',
+      name: 'Infralytiqs',
       sourcemap: false,
       plugins: [terser()],
     },

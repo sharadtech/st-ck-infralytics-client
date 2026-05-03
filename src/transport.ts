@@ -18,7 +18,7 @@ function buildUrl(cfg: TransportConfig): string {
 
 function log(debug: boolean, ...args: unknown[]): void {
   if (debug && typeof console !== 'undefined') {
-    console.log('[Infralytics]', ...args);
+    console.log('[Infralytiqs]', ...args);
   }
 }
 
